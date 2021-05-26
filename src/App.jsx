@@ -96,7 +96,7 @@ function App() {
       protein: 180,
       carbs: 60,
       fat: 60,
-      training: "true",
+      training: true,
       cardio: "low",
       weight: "high",
     },
@@ -122,10 +122,16 @@ function App() {
   };
 
   const addTask = (day) => {
-    console.log(day)
-    let proteinFactor = proteinCalculation.cardioIntensity[day.cardioIntensity][day.fitnessGoals];
-    console.log(proteinFactor);
-    console.log(`Your weight is ${day.weight} and you train ${day.frequency} per week. Your fitness goals is to ${day.fitnessGoals}, which requires you to work out ${day.frequency} per week. In order to meet your goals, you'll need to take ${proteinFactor * day.weight} grams of protein during your work out days.`)
+    const id = Math.floor(Math.random() * 100000) + 1;
+    const newMacro = {id, ...day}
+    console.log(newMacro);
+    // setSchedule(...day, newMacro)
+    // console.log(day)
+
+
+    // let proteinFactor = proteinCalculation.cardioIntensity[day.cardioIntensity][day.fitnessGoals];
+
+    // console.log(`Your weight is ${day.weight} and you train ${day.frequency} per week. Your fitness goals is to ${day.fitnessGoals}, which requires you to work out ${day.frequency} per week. In order to meet your goals, you'll need to take ${proteinFactor * day.weight} grams of protein during your work out days.`)
   }
 
   return (

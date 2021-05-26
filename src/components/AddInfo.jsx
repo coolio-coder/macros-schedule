@@ -30,6 +30,15 @@ const AddInfo = ({onAdd}) => {
       setFitnessGoals('')
   }
 
+  //Brings the drop down item to the submisson page
+  const getDropdownSelection = (e) => {
+    console.log(e);
+  }
+
+  const sayHello = () => {
+    console.log('hi');
+  }
+
   return (
     <form className="add-form" onSubmit={onSubmit}>
       <div className="form-control">
@@ -55,15 +64,15 @@ const AddInfo = ({onAdd}) => {
       </div>
       <div className="form-control">
         <label>How intense are your free weight/body weight workouts?</label>
-        <Dropdowns DropdownName={"Weights Intensity Level"} firstoption={"Low Intensity"} secondoption={"Medium Intensity"} thirdoption={"High Intensity"} onChange={(e) => setCardioIntensity(e.target.value)}/>   
+        <Dropdowns DropdownName={"Weights Intensity Level"} firstoption={"Low Intensity"} secondoption={"Medium Intensity"} thirdoption={"High Intensity"} getDropdown={getDropdownSelection } onClick={() => console.log('hi')}/>   
       </div>
       <div className="form-control">
         <label>How intense are your cardio workouts?</label>
-        <Dropdowns DropdownName={"Cardio Intensity Level"} firstoption={"Low Intensity"} secondoption={"Medium Intensity"} thirdoption={"High Intensity"} onSelect={(e) => setCardioIntensity(e.target.value)}/>
+        <Dropdowns DropdownName={"Cardio Intensity Level"} firstoption={"Low Intensity"} secondoption={"Medium Intensity"} thirdoption={"High Intensity"} getDropdown={getDropdownSelection}/>
       </div>
       <div className="form-control">
         <label>What do you want to gain?</label>
-        <Dropdowns DropdownName={"Your fitness goals"} firstoption={"Tone Muscles"} secondoption={"Lose Weight"} thirdoption={"Gain Muscles"} onSelect={(e) => setCardioIntensity(e.target.value)}/>
+        <Dropdowns DropdownName={"Your fitness goals"} firstoption={"Tone Muscles"} secondoption={"Lose Weight"} thirdoption={"Gain Muscles"} getDropdown={getDropdownSelection}/>
       </div>
 
 
