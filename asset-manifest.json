@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/macros-schedule/static/css/main.b219d811.chunk.css",
+    "main.js": "/macros-schedule/static/js/main.e9a79152.chunk.js",
+    "main.js.map": "/macros-schedule/static/js/main.e9a79152.chunk.js.map",
+    "runtime-main.js": "/macros-schedule/static/js/runtime-main.895ecff5.js",
+    "runtime-main.js.map": "/macros-schedule/static/js/runtime-main.895ecff5.js.map",
+    "static/css/2.61526bb2.chunk.css": "/macros-schedule/static/css/2.61526bb2.chunk.css",
+    "static/js/2.38724804.chunk.js": "/macros-schedule/static/js/2.38724804.chunk.js",
+    "static/js/2.38724804.chunk.js.map": "/macros-schedule/static/js/2.38724804.chunk.js.map",
+    "index.html": "/macros-schedule/index.html",
+    "static/css/2.61526bb2.chunk.css.map": "/macros-schedule/static/css/2.61526bb2.chunk.css.map",
+    "static/css/main.b219d811.chunk.css.map": "/macros-schedule/static/css/main.b219d811.chunk.css.map",
+    "static/js/2.38724804.chunk.js.LICENSE.txt": "/macros-schedule/static/js/2.38724804.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.895ecff5.js",
+    "static/css/2.61526bb2.chunk.css",
+    "static/js/2.38724804.chunk.js",
+    "static/css/main.b219d811.chunk.css",
+    "static/js/main.e9a79152.chunk.js"
+  ]
+}
