@@ -52,13 +52,15 @@ const AddInfo = ({onAdd}) => {
       </div>
 
       <div className="form-control">
-        <label>What is your work out frequency</label>
-        <input
-          type="text"
-          placeholder="How often do you workout"
-          value={frequency}
-          onChange={(e) => setFrequency(e.target.value)}
-        />
+        <label>What is your work out frequency</label><br></br>
+      <Checkboxes day={"Sunday"}/>
+      <Checkboxes day={"Monday"}/>
+      <Checkboxes day={"Tuesday"}/>
+      <Checkboxes day={"Wednesday"}/>
+      <Checkboxes day={"Thursday"}/>
+      <Checkboxes day={"Friday"}/>
+      <Checkboxes day={"Saturday"}/>
+
         {/* <Checkboxes /> */}
 
       </div>

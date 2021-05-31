@@ -1,23 +1,12 @@
-import React from 'react'
 import Form from 'react-bootstrap/Form'
+import { useState } from 'react'
 
-const Checkboxes = () => {
+const Checkboxes = ({ day }) => {
+  const [date, setDate] = useState('')
   return (
-    <Form>
-      {['checkbox', 'radio'].map((type) => (
-        <div key={`inline-${type}`} className="mb-3">
-          <Form.Check inline label="1" name="group1" type={type} id={`inline-${type}-1`} />
-          <Form.Check inline label="2" name="group1" type={type} id={`inline-${type}-2`} />
-          <Form.Check
-            inline
-            disabled
-            label="3 (disabled)"
-            type={type}
-            id={`inline-${type}-3`}
-          />
+        <div key='inline-checkbox' className="mb-3">
+          <Form.Check style={{width: "5px", height: "5px"}} label={day} name="group1" type="checkbox" id={`inline-checkbox-1`} onChange={(e) => setDate(e.currentTarget.checked)}/>
         </div>
-      ))}
-    </Form>
   )
 }
 
