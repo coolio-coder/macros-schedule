@@ -1,7 +1,11 @@
 import Header from "./components/Header";
 import Macros from "./components/MacroSchedule";
 import AddInfo from "./components/AddInfo";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
+import { PersonInfoProvider, PersonInfoContext } from "./contexts/infoContext";
+
+//First we will create a new contex
+// const myContext = React.createContext();
 
 // Actual calculations (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6566799/)
 
@@ -39,79 +43,8 @@ const proteinCalculation = {
 
 
 function App() {
-  const [macroSchedule, setSchedule] = useState([
-    {
-      day: "Sunday",
-      calories: 2100,
-      protein: 180,
-      carbs: 60,
-      fat: 60,
-      training: true,
-      cardio: "high",
-      weight: "medium",
-    },
-    {
-      day: "Monday",
-      calories: 2300,
-      protein: 180,
-      carbs: 60,
-      fat: 60,
-      training: true,
-      cardio: "medium",
-      weight: "low",
-    },
-    {
-      day: "Tuesday",
-      calories: 2100,
-      protein: 180,
-      carbs: 60,
-      fat: 60,
-      training: false,
-      cardio: "low",
-      weight: "medium",
-    },
-    {
-      day: "Wednesday",
-      calories: 2100,
-      protein: 180,
-      carbs: 60,
-      fat: 60,
-      training: true,
-      cardio: "medium",
-      weight: "medium",
-    },
-    {
-      day: "Thursday",
-      calories: 2100,
-      protein: 180,
-      carbs: 60,
-      fat: 60,
-      training: false,
-      cardio: "high",
-      weight: "medium",
-    },
-    {
-      day: "Friday",
-      calories: 2100,
-      protein: 180,
-      carbs: 60,
-      fat: 60,
-      training: true,
-      cardio: "low",
-      weight: "high",
-    },
-    {
-      day: "Saturday",
-      calories: 2100,
-      protein: 180,
-      carbs: 60,
-      fat: 60,
-      training: true,
-      cardio: "medium",
-      weight: "medium",
-    },
-  ]);
-
+  const value = useContext(PersonInfoContext);
+  
   const toggleTraining = (day) => {
   //   console.log(day);
   //   // setSchedule(
@@ -134,17 +67,20 @@ function App() {
     // console.log(`Your weight is ${day.weight} and you train ${day.frequency} per week. Your fitness goals is to ${day.fitnessGoals}, which requires you to work out ${day.frequency} per week. In order to meet your goals, you'll need to take ${proteinFactor * day.weight} grams of protein during your work out days.`)
   }
 
+  
   return (
+    <PersonInfoProvider>
     <div className="container">
       <Header />
       <AddInfo onAdd={addTask}/>
       <Macros
-        macroSchedule={macroSchedule}
-        setMSchedule={setSchedule}
+        // macroSchedule={macroSchedule}
+        // setMSchedule={setSchedule}
         onToggle={toggleTraining}
-      />
+        />
     </div>
-    //  <button type='button' className='btn btn-primary'>Primary</button>
+    {/* // <button type='button' className='btn btn-primary'>Primary</button> */}
+        </PersonInfoProvider>
   );
 }
 

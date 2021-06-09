@@ -1,14 +1,16 @@
 import { useState } from "react";
-import Dropdowns from "./Dropdown";
 import Checkboxes from "./Checkboxes";
+import { PersonInfoContext, PersonInfoProvider } from "../contexts/infoContext";
+import Dropdown from 'react-bootstrap/Dropdown'
+import DropdownButton from 'react-bootstrap/DropdownButton'
 
 
 const AddInfo = ({onAdd}) => {
   const [weight, setWeight] = useState("");
   const [frequency, setFrequency] = useState("");
-  const [weightIntensity, setWeightIntensity] = useState("Medium Intensity");
-  const [cardioIntensity, setCardioIntensity] = useState("Medium Intensity");
-  const [fitnessGoals, setFitnessGoals] = useState("Lose Weight");
+  const [weightIntensity, setWeightIntensity] = useState("Set Weight Intensity");
+  const [cardioIntensity, setCardioIntensity] = useState("Set Cardio Intensity");
+  const [fitnessGoals, setFitnessGoals] = useState("Set your Fitness Goals");
 
   const onSubmit = (e) => {
       //Doesn't acutally submit to the page
@@ -33,10 +35,6 @@ const AddInfo = ({onAdd}) => {
   //Brings the drop down item to the submisson page
   const getDropdownSelection = (e) => {
     console.log(e);
-  }
-
-  const sayHello = () => {
-    console.log('hi');
   }
 
   return (
@@ -66,15 +64,45 @@ const AddInfo = ({onAdd}) => {
       </div>
       <div className="form-control">
         <label>How intense are your free weight/body weight workouts?</label>
-        <Dropdowns DropdownName={"Weights Intensity Level"} firstoption={"Low Intensity"} secondoption={"Medium Intensity"} thirdoption={"High Intensity"} getDropdown={getDropdownSelection } onClick={() => console.log('hi')}/>   
+        <DropdownButton id="dropdown-basic-button" title={weightIntensity}>
+            <Dropdown.Item onClick={(e) => setWeightIntensity('Low Intensity')}>
+            {'Low Intensity'}
+            </Dropdown.Item>
+            <Dropdown.Item onClick={(e) => setWeightIntensity('Medium Intensity')}>
+            {'Medium Intensity'}
+            </Dropdown.Item>
+            <Dropdown.Item onClick={(e) => setWeightIntensity('High Intensity')}>
+            {'High Intensity'}
+            </Dropdown.Item>
+        </DropdownButton>
       </div>
       <div className="form-control">
         <label>How intense are your cardio workouts?</label>
-        <Dropdowns DropdownName={"Cardio Intensity Level"} firstoption={"Low Intensity"} secondoption={"Medium Intensity"} thirdoption={"High Intensity"} getDropdown={getDropdownSelection}/>
+        <DropdownButton id="dropdown-basic-button" title={cardioIntensity}>
+            <Dropdown.Item onClick={(e) => setCardioIntensity('Low Intensity')}>
+            {'Low Intensity'}
+            </Dropdown.Item>
+            <Dropdown.Item onClick={(e) => setCardioIntensity('Medium Intensity')}>
+            {'Medium Intensity'}
+            </Dropdown.Item>
+            <Dropdown.Item onClick={(e) => setCardioIntensity('High Intensity')}>
+            {'High Intensity'}
+            </Dropdown.Item>
+        </DropdownButton>
       </div>
       <div className="form-control">
         <label>What do you want to gain?</label>
-        <Dropdowns DropdownName={"Your fitness goals"} firstoption={"Tone Muscles"} secondoption={"Lose Weight"} thirdoption={"Gain Muscles"} getDropdown={getDropdownSelection}/>
+        <DropdownButton id="dropdown-basic-button" title={fitnessGoals}>
+            <Dropdown.Item onClick={(e) => setFitnessGoals('Tone Muscles')}>
+            {'Tone Muscle'}
+            </Dropdown.Item>
+            <Dropdown.Item onClick={(e) => setFitnessGoals('Lose Weight')}>
+            {'Lose Weight'}
+            </Dropdown.Item>
+            <Dropdown.Item onClick={(e) => setFitnessGoals('Gain Muscles')}>
+            {'Gain Muscles'}
+            </Dropdown.Item>
+        </DropdownButton>
       </div>
 
 
@@ -82,11 +110,6 @@ const AddInfo = ({onAdd}) => {
     </form>
   );
 };
-
-AddInfo.defaultProps = {
-  cardioIntensity: 'Medium Intensity',
-  weightIntensity: 'Medium Intensity',
-}
 
 export default AddInfo;
 

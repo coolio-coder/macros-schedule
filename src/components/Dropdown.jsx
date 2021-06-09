@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
+import { DropDownGoalContext, DropDownGoalProvider } from "../contexts/infoContext"
 
 const Dropdown1 = ({DropdownName, firstoption, secondoption, thirdoption , getDropdown}) => {
     const [btnTitle, setBtnTitle] = useState(DropdownName)

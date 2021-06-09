@@ -1,6 +1,7 @@
 import { FaTimes } from "react-icons/fa";
 
 const Macro = ({ macroInfo , onToggle}) => {
+    
     return (
         <div className='task' onDoubleClick={() => onToggle(macroInfo.day)}>
             <h3>{macroInfo.day} <FaTimes style={{ cursor: 'pointer'}} /></h3>
