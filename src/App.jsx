@@ -43,7 +43,7 @@ const proteinCalculation = {
 
 
 function App() {
-  const value = useContext(PersonInfoContext);
+  // const [macroSchedule, setSchedule] = useContext(PersonInfoContext)
   
   const toggleTraining = (day) => {
   //   console.log(day);
@@ -61,7 +61,55 @@ function App() {
     // setSchedule(...day, newMacro)
     // console.log(day)
 
+    //Set the dates object by itself
+    let dateList = newMacro.dates;
 
+    //Need to read more
+    Object.filter = (obj, predicate) => 
+      Object.keys(obj)
+            .filter( key => predicate(obj[key]) )
+            .reduce( (res, key) => (res[key] = obj[key], res), {} );
+
+
+    let workoutDays = Object.filter(dateList, workout => workout === true);
+    let nonworkoutDays = Object.filter(dateList, workout => workout === false);
+
+    console.log(workoutDays)
+    console.log(nonworkoutDays)
+
+    //WorkoutInfo details all the info regarding the user's health and workout intensity
+    const healthInfo = Object.keys(newMacro).reduce((object, key) => {
+      if (key !== "dates" && key !== "id" && key !== "cardioIntensity" && key !== "fitnessGoals" && key !== "weightIntensity") {
+        object[key] = newMacro[key]
+      }
+      return object
+    }, {})
+
+    const fitnessInfo = Object.keys(newMacro).reduce((object, key) => {
+      if (key !== "dates" && key !== "id" && key != "weight") {
+        object[key] = newMacro[key]
+      }
+      return object
+    }, {})
+
+    //Go through each date and add fitnessinfo if there it's a workout date or just health info on a regular date
+    Object.keys(workoutDays).map(function(key) {
+      workoutDays[key] = {healthInfo, fitnessInfo};
+    });
+
+    Object.keys(nonworkoutDays).map(function(key) {
+      nonworkoutDays[key] = healthInfo;
+    });
+
+    console.log(workoutDays)
+    console.log(nonworkoutDays)
+
+    let weeklyScheduleUnsorted = Object.assign({}, workoutDays, nonworkoutDays)
+    let weeklyScheduleSorted = Object.entries(weeklyScheduleUnsorted).map((e) => ( { [e[0]]: e[1] } ));
+
+    console.log(weeklyScheduleSorted);
+    
+    // setSchedule(prevSchedules => [...prevSchedules, (weeklyScheduleSorted)])
     // let proteinFactor = proteinCalculation.cardioIntensity[day.cardioIntensity][day.fitnessGoals];
 
     // console.log(`Your weight is ${day.weight} and you train ${day.frequency} per week. Your fitness goals is to ${day.fitnessGoals}, which requires you to work out ${day.frequency} per week. In order to meet your goals, you'll need to take ${proteinFactor * day.weight} grams of protein during your work out days.`)
