@@ -41,19 +41,9 @@ const proteinCalculation = {
   }
 };
 
-
-function App() {
-  // const [macroSchedule, setSchedule] = useContext(PersonInfoContext)
+function ChildApp() {
+  const [macroSchedule, setSchedule] = useContext(PersonInfoContext)
   
-  const toggleTraining = (day) => {
-  //   console.log(day);
-  //   // setSchedule(
-  //   //   macroSchedule.map((macroInfo) =>
-  //   //     macroInfo.day === day ?  console.log('Hi')  : console.log('bye')
-  //   //   )
-  //   // );
-  };
-
   const addTask = (day) => {
     const id = Math.floor(Math.random() * 100000) + 1;
     const newMacro = {id, ...day}
@@ -108,24 +98,48 @@ function App() {
     let weeklyScheduleSorted = Object.entries(weeklyScheduleUnsorted).map((e) => ( { [e[0]]: e[1] } ));
 
     console.log(weeklyScheduleSorted);
+
+    console.log(macroSchedule)
     
-    // setSchedule(prevSchedules => [...prevSchedules, (weeklyScheduleSorted)])
+    setSchedule(prevSchedules => [...prevSchedules, weeklyScheduleSorted])
+    console.log(macroSchedule)
     // let proteinFactor = proteinCalculation.cardioIntensity[day.cardioIntensity][day.fitnessGoals];
 
     // console.log(`Your weight is ${day.weight} and you train ${day.frequency} per week. Your fitness goals is to ${day.fitnessGoals}, which requires you to work out ${day.frequency} per week. In order to meet your goals, you'll need to take ${proteinFactor * day.weight} grams of protein during your work out days.`)
   }
 
+  const toggleTraining = (day) => {
+
+  };
+
+  const calculateCalorie = () => {
+    
+  }
+
+  return (
+    <>
+    <AddInfo onAdd={addTask}/> 
+    <Macros
+    // macroSchedule={macroSchedule}
+    // setMSchedule={setSchedule}
+    onToggle={toggleTraining}
+    />
+    </> 
+  )
+
+  
+}
+
+function App() {
+  
   
   return (
     <PersonInfoProvider>
     <div className="container">
       <Header />
-      <AddInfo onAdd={addTask}/>
-      <Macros
-        // macroSchedule={macroSchedule}
-        // setMSchedule={setSchedule}
-        onToggle={toggleTraining}
-        />
+      <ChildApp>        
+      </ChildApp>
+
     </div>
     {/* // <button type='button' className='btn btn-primary'>Primary</button> */}
         </PersonInfoProvider>

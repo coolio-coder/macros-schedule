@@ -8,12 +8,7 @@ export const PersonInfoContext = createContext();
 
 //Provider wraps around all the components that can access the state (info) below
 export const PersonInfoProvider = props => {
-    const [macroSchedule, setSchedule] = useState([
-        {
-          cardio: "high",
-          weight: "medium",
-        },
-    ]);
+    const [macroSchedule, setSchedule] = useState([]);
 
 return(
   <PersonInfoContext.Provider value={[macroSchedule, setSchedule]}>
