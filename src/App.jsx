@@ -63,6 +63,30 @@ function ChildApp() {
     weightIntensity: "Medium",
   }
 
+  const intensityFactor = {
+      cardioIntensity: {
+        "High": {
+          weightIntensity: {
+            "High": 1.9,
+            "Medium": 1.725,
+            "Low": 1.55,
+          }},
+        "Medium": {
+          weightIntensity: {
+            "High": 1.725,
+            "Medium": 1.55,
+            "Low": 1.375,
+          }},
+        "Low": {
+          weightIntensity: {
+            "High": 1.55,
+            "Medium": 1.375,
+            "Low": 1.2,
+          }
+        }
+      }
+  }
+
   //function to calculate BMR (http://en.wikipedia.org/wiki/Harris-Benedict_equation)
   const BMRCalculator = (arr) => {
     let BMR
@@ -77,25 +101,30 @@ function ChildApp() {
   } 
 
   const gymMRCalculator = (arr) => {
-    if(arr.cardioIntensity === 'High' && arr.weightIntensity === 'High' || arr.weightIntensity === 'High' && arr.cardioIntensity === 'High') {
-      return BMRCalculator(arr) * 1.9;
-    }
-    if(arr.cardioIntensity === 'High' && arr.weightIntensity === 'Medium' || arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'High') {
-      return BMRCalculator(arr) * 1.725;
-    }
-    if(arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'Medium' || arr.weigthIntensity === 'Medium' && arr.cardioIntensity === 'Medium') {
-      return BMRCalculator(arr) * 1.55;
-    }
-    if(arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'Low' || arr.weigthIntensity === 'Medium' && arr.cardioIntensity === 'Low') {
-      return BMRCalculator(arr) * 1.375;
-    }
-    if(arr.cardioIntensity === 'Low' && arr.weightIntensity === 'Low' || arr.weigthIntensity === 'Low' && arr.cardioIntensity === 'Low') {
-      return BMRCalculator(arr) * 1.2;
-    }
-    if(arr.cardioIntensity === 'Low' && arr.weightIntensity === 'High' || arr.weigthIntensity === 'Low' && arr.cardioIntensity === 'High') {
-      return BMRCalculator(arr) * 1.375;
-    }
+    // if(arr.cardioIntensity === 'High' && arr.weightIntensity === 'High' || arr.weightIntensity === 'High' && arr.cardioIntensity === 'High') {
+    //   return BMRCalculator(arr) * 1.9;
+    // }
+    // if(arr.cardioIntensity === 'High' && arr.weightIntensity === 'Medium' || arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'High') {
+    //   return BMRCalculator(arr) * 1.725;
+    // }
+    // if(arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'Medium' || arr.weigthIntensity === 'Medium' && arr.cardioIntensity === 'Medium') {
+    //   return BMRCalculator(arr) * 1.55;
+    // }
+    // if(arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'Low' || arr.weigthIntensity === 'Medium' && arr.cardioIntensity === 'Low') {
+    //   return BMRCalculator(arr) * 1.375;
+    // }
+    // if(arr.cardioIntensity === 'Low' && arr.weightIntensity === 'Low' || arr.weigthIntensity === 'Low' && arr.cardioIntensity === 'Low') {
+    //   return BMRCalculator(arr) * 1.2;
+    // }
+    // if(arr.cardioIntensity === 'Low' && arr.weightIntensity === 'High' || arr.weigthIntensity === 'Low' && arr.cardioIntensity === 'High') {
+    //   return BMRCalculator(arr) * 1.375;
+    // }
+
+
+
   }
+
+  console.log(gymMRCalculator(tempArr))
 
 
   const proteinCalculator = (arr) => {
@@ -104,9 +133,6 @@ function ChildApp() {
   }
 
   console.log(proteinCalculator(tempArr))
-
-
-
 
 
   const AddTask = (day) => {
@@ -162,18 +188,14 @@ function ChildApp() {
     // setSchedule(weeklyScheduleSorted, function() {
     //   console.log('hi')
     // })
-
-    setSchedule(weeklyScheduleSorted, () => {
-      console.log(macroSchedule);
-  });
+    useEffect(() => {
+      console.log('hi')
+    })
+    setSchedule(weeklyScheduleSorted);
     console.log(macroSchedule)
 
     // console.log(`Your weight is ${day.weight} and you train ${day.frequency} per week. Your fitness goals is to ${day.fitnessGoals}, which requires you to work out ${day.frequency} per week. In order to meet your goals, you'll need to take ${proteinFactor * day.weight} grams of protein during your work out days.`)
   }
-
-  const toggleTraining = (day) => {
-
-  };
 
   // const CalculateCalorie = () => {
   //   const [macroSchedule, setSchedule] = useContext(PersonInfoContext)
