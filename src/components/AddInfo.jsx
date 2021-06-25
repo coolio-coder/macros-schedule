@@ -58,10 +58,16 @@ const AddInfo = ({onAdd}) => {
       }
 
       //Adds info to the state via submitInfo function in App.js
-      onAdd({weight, dates, weightIntensity, cardioIntensity, fitnessGoals})
+      onAdd({weight, dates, age, height, gender, weightIntensity,  cardioIntensity, fitnessGoals})
 
       //Resets the values in the home screen
       setWeight('');
+      setAge('');
+      setHeight('');
+      setGender({
+        male: false,
+        female: false,
+      })     
       setDates({
         Sunday: false,
         Monday: false,
@@ -70,7 +76,8 @@ const AddInfo = ({onAdd}) => {
         Thursday: false,
         Friday: false,
         Saturday: false,
-    })
+      })
+
       setWeightIntensity('Set Weight Intensity');
       setCardioIntensity('Set Cardio Intensity');
       setFitnessGoals('Set your Fitness Goals');

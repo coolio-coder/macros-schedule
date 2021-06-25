@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 import Macros from "./components/MacroSchedule";
 import AddInfo from "./components/AddInfo";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { PersonInfoProvider, PersonInfoContext } from "./contexts/infoContext";
 
 //First we will create a new contex
@@ -23,17 +23,17 @@ import { PersonInfoProvider, PersonInfoContext } from "./contexts/infoContext";
 
 const proteinCalculation = {
   cardioIntensity: {
-    "Low Intensity": {
+    "Low": {
       "Tone Muscles": 1,
       "Lose Weight": 1.2,
       "Gain Muscles": 1.4,
     },
-    "Medium Intensity": {
+    "Medium": {
       "Tone Muscles": 1.4,
       "Lose Weight": 1.6,
       "Gain Muscles": 1.8,
     },
-    "High Intensity": {
+    "High": {
       "Tone Muscles": 1.6,
       "Lose Weight": 1.8,
       "Gain Muscles": 2.0,
@@ -44,12 +44,75 @@ const proteinCalculation = {
 function ChildApp() {
   const [macroSchedule, setSchedule] = useContext(PersonInfoContext)
   
-  const addTask = (day) => {
+  const tempArr = {
+    age: "24",
+    cardioIntensity: "High",
+    dates: {Friday: false,
+      Monday: false,
+      Saturday: false,
+      Sunday: true,
+      Thursday: false,
+      Tuesday: true,
+      Wednesday: false,
+    },
+    fitnessGoals: "Lose Weight",
+    gender: {female: false, male: true},
+    height: "180",
+    id: 46062,
+    weight: "89",
+    weightIntensity: "Medium",
+  }
+
+  //function to calculate BMR (http://en.wikipedia.org/wiki/Harris-Benedict_equation)
+  const BMRCalculator = (arr) => {
+    let BMR
+    if(arr.gender.male == true) {
+      BMR = 66.5 + (13.75 * arr.weight) + (5.003 * arr.height) - (6.755 * arr.age);
+      return BMR
+    }
+    if(arr.gender.female == true) {
+      BMR = 655 + (9.563 * arr.weight) + (1.85 * arr.height) - (4.676 * arr.age);
+      return BMR
+    }
+  } 
+
+  const gymMRCalculator = (arr) => {
+    if(arr.cardioIntensity === 'High' && arr.weightIntensity === 'High' || arr.weightIntensity === 'High' && arr.cardioIntensity === 'High') {
+      return BMRCalculator(arr) * 1.9;
+    }
+    if(arr.cardioIntensity === 'High' && arr.weightIntensity === 'Medium' || arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'High') {
+      return BMRCalculator(arr) * 1.725;
+    }
+    if(arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'Medium' || arr.weigthIntensity === 'Medium' && arr.cardioIntensity === 'Medium') {
+      return BMRCalculator(arr) * 1.55;
+    }
+    if(arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'Low' || arr.weigthIntensity === 'Medium' && arr.cardioIntensity === 'Low') {
+      return BMRCalculator(arr) * 1.375;
+    }
+    if(arr.cardioIntensity === 'Low' && arr.weightIntensity === 'Low' || arr.weigthIntensity === 'Low' && arr.cardioIntensity === 'Low') {
+      return BMRCalculator(arr) * 1.2;
+    }
+    if(arr.cardioIntensity === 'Low' && arr.weightIntensity === 'High' || arr.weigthIntensity === 'Low' && arr.cardioIntensity === 'High') {
+      return BMRCalculator(arr) * 1.375;
+    }
+  }
+
+
+  const proteinCalculator = (arr) => {
+    let proteinFactor = proteinCalculation.cardioIntensity[arr.cardioIntensity][arr.fitnessGoals];
+    return proteinFactor * arr.weight;
+  }
+
+  console.log(proteinCalculator(tempArr))
+
+
+
+
+
+  const AddTask = (day) => {
     const id = Math.floor(Math.random() * 100000) + 1;
     const newMacro = {id, ...day}
     console.log(newMacro);
-    // setSchedule(...day, newMacro)
-    // console.log(day)
 
     //Set the dates object by itself
     let dateList = newMacro.dates;
@@ -63,9 +126,6 @@ function ChildApp() {
 
     let workoutDays = Object.filter(dateList, workout => workout === true);
     let nonworkoutDays = Object.filter(dateList, workout => workout === false);
-
-    console.log(workoutDays)
-    console.log(nonworkoutDays)
 
     //WorkoutInfo details all the info regarding the user's health and workout intensity
     const healthInfo = Object.keys(newMacro).reduce((object, key) => {
@@ -91,19 +151,22 @@ function ChildApp() {
       nonworkoutDays[key] = healthInfo;
     });
 
-    console.log(workoutDays)
-    console.log(nonworkoutDays)
-
     let weeklyScheduleUnsorted = Object.assign({}, workoutDays, nonworkoutDays)
     let weeklyScheduleSorted = Object.entries(weeklyScheduleUnsorted).map((e) => ( { [e[0]]: e[1] } ));
-
-    console.log(weeklyScheduleSorted);
-
-    console.log(macroSchedule)
     
-    setSchedule(prevSchedules => [...prevSchedules, weeklyScheduleSorted])
+    
+    console.log(weeklyScheduleSorted)
+    // setSchedule(oldState => [...oldState, ['hi']])
+    // console.log(macroSchedule)
+
+    // setSchedule(weeklyScheduleSorted, function() {
+    //   console.log('hi')
+    // })
+
+    setSchedule(weeklyScheduleSorted, () => {
+      console.log(macroSchedule);
+  });
     console.log(macroSchedule)
-    // let proteinFactor = proteinCalculation.cardioIntensity[day.cardioIntensity][day.fitnessGoals];
 
     // console.log(`Your weight is ${day.weight} and you train ${day.frequency} per week. Your fitness goals is to ${day.fitnessGoals}, which requires you to work out ${day.frequency} per week. In order to meet your goals, you'll need to take ${proteinFactor * day.weight} grams of protein during your work out days.`)
   }
@@ -112,18 +175,20 @@ function ChildApp() {
 
   };
 
-  const calculateCalorie = () => {
-    
-  }
+  // const CalculateCalorie = () => {
+  //   const [macroSchedule, setSchedule] = useContext(PersonInfoContext)
+  //   let proteinFactor = proteinCalculation.cardioIntensity[macroSchedule.cardioIntensity][macroSchedule.fitnessGoals];
+  //   console.log(proteinFactor)
+  // }
 
   return (
     <>
-    <AddInfo onAdd={addTask}/> 
-    <Macros
+    <AddInfo onAdd={AddTask}/> 
+    {/* <Macros
     // macroSchedule={macroSchedule}
     // setMSchedule={setSchedule}
     onToggle={toggleTraining}
-    />
+    /> */}
     </> 
   )
 
