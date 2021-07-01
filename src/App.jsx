@@ -90,7 +90,7 @@ function ChildApp() {
   //function to calculate BMR (http://en.wikipedia.org/wiki/Harris-Benedict_equation)
   const BMRCalculator = (arr) => {
     let BMR
-    if(arr.gender.male == true) {
+    if(arr.gender.male === true) {
       BMR = 66.5 + (13.75 * arr.weight) + (5.003 * arr.height) - (6.755 * arr.age);
       return BMR
     }
@@ -100,32 +100,12 @@ function ChildApp() {
     }
   } 
 
+  //calculate your BMR based on the intensity of your work out above in the intensity factor. 
   const gymMRCalculator = (arr) => {
-    // if(arr.cardioIntensity === 'High' && arr.weightIntensity === 'High' || arr.weightIntensity === 'High' && arr.cardioIntensity === 'High') {
-    //   return BMRCalculator(arr) * 1.9;
-    // }
-    // if(arr.cardioIntensity === 'High' && arr.weightIntensity === 'Medium' || arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'High') {
-    //   return BMRCalculator(arr) * 1.725;
-    // }
-    // if(arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'Medium' || arr.weigthIntensity === 'Medium' && arr.cardioIntensity === 'Medium') {
-    //   return BMRCalculator(arr) * 1.55;
-    // }
-    // if(arr.cardioIntensity === 'Medium' && arr.weightIntensity === 'Low' || arr.weigthIntensity === 'Medium' && arr.cardioIntensity === 'Low') {
-    //   return BMRCalculator(arr) * 1.375;
-    // }
-    // if(arr.cardioIntensity === 'Low' && arr.weightIntensity === 'Low' || arr.weigthIntensity === 'Low' && arr.cardioIntensity === 'Low') {
-    //   return BMRCalculator(arr) * 1.2;
-    // }
-    // if(arr.cardioIntensity === 'Low' && arr.weightIntensity === 'High' || arr.weigthIntensity === 'Low' && arr.cardioIntensity === 'High') {
-    //   return BMRCalculator(arr) * 1.375;
-    // }
-
-
-
+    return BMRCalculator(arr) * (intensityFactor.cardioIntensity[arr.cardioIntensity].weightIntensity[arr.weightIntensity])
   }
 
   console.log(gymMRCalculator(tempArr))
-
 
   const proteinCalculator = (arr) => {
     let proteinFactor = proteinCalculation.cardioIntensity[arr.cardioIntensity][arr.fitnessGoals];
