@@ -105,15 +105,70 @@ function ChildApp() {
     return BMRCalculator(arr) * (intensityFactor.cardioIntensity[arr.cardioIntensity].weightIntensity[arr.weightIntensity])
   }
 
-  console.log(gymMRCalculator(tempArr))
-
   const proteinCalculator = (arr) => {
     let proteinFactor = proteinCalculation.cardioIntensity[arr.cardioIntensity][arr.fitnessGoals];
     return proteinFactor * arr.weight;
   }
 
-  console.log(proteinCalculator(tempArr))
+  const carbCalculator = (arr) => {
+    let totalMacro = (proteinCalculator(tempArr) * 100) / 60;
+    
+  }
 
+
+  const formatObject = (info) => {
+    const id = Math.floor(Math.random() * 100000) + 1;
+    const newMacro = {id, ...info}
+
+    let dateList = newMacro.dates;
+    console.log(newMacro);
+
+    Object.filter = (obj, predicate) => 
+    Object.keys(obj)
+          .filter( key => predicate(obj[key]) )
+          .reduce( (res, key) => (res[key] = obj[key], res), {} );
+
+    console.log(newMacro)
+
+    let workoutDays = Object.filter(dateList, workout => workout === true);
+    let nonworkoutDays = Object.filter(dateList, workout => workout === false);
+
+    // const healthInfo = Object.keys(newMacro).reduce((object, key) => {
+    //   if (key !== "dates" && key !== "gender" && key !== "id" && key !== "cardioIntensity" && key !== "fitnessGoals" && key !== "weightIntensity") {
+    //     object[key] = newMacro[key]
+    //   }
+    //   return object
+    // }, {})
+
+    let workoutMacros = {
+      calories: gymMRCalculator(tempArr),
+      protein: proteinCalculator(tempArr),
+      carbs: (proteinCalculator(tempArr) * 100) / 20, // 20 can change to a variable depending on how much % protein, carbs, or fats the user want in their diet
+      fat: (proteinCalculator(tempArr) * 100) / 20,
+    }
+
+    let restMacros = {
+      calories: BMRCalculator(tempArr),
+      protein: proteinCalculator(tempArr),
+      carbs: (proteinCalculator(tempArr) * 100) / 20, // 20 can change to a variable depending on how much % protein, carbs, or fats the user want in their diet
+      fat: (proteinCalculator(tempArr) * 100) / 20,
+    }
+
+    console.log(workoutMacros)
+    console.log(restMacros)
+
+    Object.keys(workoutDays).map(function(key) {
+      workoutDays[key] = workoutMacros
+    });
+
+    console.log(workoutDays)
+
+  }
+
+  const PushToContext = (arr) => {
+  }
+
+  formatObject(tempArr)
 
   const AddTask = (day) => {
     const id = Math.floor(Math.random() * 100000) + 1;
@@ -162,26 +217,22 @@ function ChildApp() {
     
     
     console.log(weeklyScheduleSorted)
+    console.log(macroSchedule) 
+    
+    // setSchedule(oldState => [...oldState, weeklyScheduleSorted])
     // setSchedule(oldState => [...oldState, ['hi']])
     // console.log(macroSchedule)
-
+    
     // setSchedule(weeklyScheduleSorted, function() {
-    //   console.log('hi')
-    // })
-    useEffect(() => {
-      console.log('hi')
-    })
-    setSchedule(weeklyScheduleSorted);
-    console.log(macroSchedule)
+      //   console.log('hi')
+      // })
+      // useEffect(() => {
+        //   console.log('hi')
+        // })
+        // setSchedule(weeklyScheduleSorted);
 
-    // console.log(`Your weight is ${day.weight} and you train ${day.frequency} per week. Your fitness goals is to ${day.fitnessGoals}, which requires you to work out ${day.frequency} per week. In order to meet your goals, you'll need to take ${proteinFactor * day.weight} grams of protein during your work out days.`)
+    console.log(macroSchedule) 
   }
-
-  // const CalculateCalorie = () => {
-  //   const [macroSchedule, setSchedule] = useContext(PersonInfoContext)
-  //   let proteinFactor = proteinCalculation.cardioIntensity[macroSchedule.cardioIntensity][macroSchedule.fitnessGoals];
-  //   console.log(proteinFactor)
-  // }
 
   return (
     <>
